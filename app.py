@@ -68,15 +68,21 @@ def load_roberta():
 
 # ── Fungsi inferensi ─────────────────────────────────────────
 def predict_nb_svm(text_preprocessed: str, tfidf, nb, svm) -> dict:
-    """Prediksi dengan Naive Bayes dan SVM."""
     X = tfidf.transform([text_preprocessed])
+    
+    # NB prediction
     label_nb = nb.predict(X)[0]
     prob_nb = nb.predict_proba(X)[0]
 
-    label_svm = svm.predict(X)[0]
-    # SVM default tidak punya predict_proba; gunakan decision_function sebagai proxy
-    # Pastikan SVM dilatih tanpa probability=True (default)
-    # Untuk SVM, kita hanya tampilkan label saja
+    # SVM prediction — tangani kemungkinan version mismatch
+    try:
+        label_svm = svm.predict(X)[0]
+    except AttributeError:
+        # Fallback: gunakan decision_function jika predict gagal
+        decision = svm.decision_function(X)[0]
+        classes = svm.classes_
+        label_svm = classes[decision.argmax()]
+    
     return {
         "nb": {"label": label_nb, "probabilities": dict(zip(nb.classes_, prob_nb))},
         "svm": {"label": label_svm},
