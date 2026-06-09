@@ -39,6 +39,7 @@ def load_classical_models():
         nb = pickle.load(f)
     with open(f"{ARTIFACT_DIR}/svm_model.pkl", "rb") as f:
         svm = pickle.load(f)
+    st.sidebar.write(type(svm))
     with open(f"{ARTIFACT_DIR}/label_encoder.pkl", "rb") as f:
         le = pickle.load(f)
     return tfidf, nb, svm, le
@@ -333,8 +334,3 @@ if predict_btn and user_input.strip():
 
 elif predict_btn and not user_input.strip():
     st.warning("Masukkan teks tweet terlebih dahulu.")
-
-import sklearn
-
-st.sidebar.write("sklearn:", sklearn.__version__)
-st.sidebar.write(type(svm))
