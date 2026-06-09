@@ -1,8 +1,3 @@
-# app.py — Aplikasi Streamlit untuk Klasifikasi Sentimen
-# Konflik Israel-Palestine (Twitter)
-# Abdan Nawwaf El Hibban — Skripsi UIN Malang 2024
-# ============================================================
-
 import os
 import json
 import pickle
