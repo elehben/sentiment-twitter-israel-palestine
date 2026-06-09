@@ -193,10 +193,17 @@ use_classical = model_choice in ("Semua Model (Bandingkan)", "Naive Bayes", "SVM
 
 # Input teks
 st.subheader("Masukkan Tweet")
+if "tweet_input" not in st.session_state:
+    st.session_state["tweet_input"] = ""
+
+def set_example_text(text: str):
+    st.session_state["tweet_input"] = text
+
 user_input = st.text_area(
     "Teks tweet (bahasa Inggris):",
     height=120,
     placeholder='Contoh: "Free Palestine! The world must stand for justice and human rights."',
+    key="tweet_input",
 )
 
 # Tombol prediksi
@@ -212,14 +219,12 @@ with st.expander("📋 Contoh tweet untuk dicoba"):
         "Both sides need to come to the negotiating table immediately.",
     ]
     for i, ex in enumerate(examples):
-        if st.button(f"Contoh {i+1}", key=f"ex_{i}"):
-            st.session_state["example_text"] = ex
-            st.rerun()
-
-# Isi otomatis dari contoh yang dipilih
-if "example_text" in st.session_state:
-    user_input = st.session_state.pop("example_text")
-    st.rerun()  # supaya textarea ter-update — perlu workaround
+        st.button(
+            f"Contoh {i+1}",
+            key=f"ex_{i}",
+            on_click=set_example_text,
+            args=(ex,),
+        )
 
 
 # ── Prediksi ─────────────────────────────────────────────────
