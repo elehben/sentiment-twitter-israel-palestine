@@ -188,8 +188,7 @@ with st.sidebar:
 # Pilih model
 model_choice = st.selectbox(
     "Pilih model klasifikasi:",
-    # options=["Semua Model (Bandingkan)", "Naive Bayes", "SVM", "RoBERTa"],
-    options=["Naive Bayes", "RoBERTa"],
+    options=["Semua Model (Bandingkan)", "Naive Bayes", "SVM", "RoBERTa"],
     index=0,
 )
 
