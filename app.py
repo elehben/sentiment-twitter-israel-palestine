@@ -333,3 +333,8 @@ if predict_btn and user_input.strip():
 
 elif predict_btn and not user_input.strip():
     st.warning("Masukkan teks tweet terlebih dahulu.")
+
+import sklearn
+
+st.sidebar.write("sklearn:", sklearn.__version__)
+st.sidebar.write(type(svm))
